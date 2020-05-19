@@ -1,55 +1,57 @@
 /*
-filename : cryptography.cpp
+filename : mobilekeypad.cpp
 details  : number of possible ways to form words in the moblile key pad from 2 to 9 numbers 
 author   :B.Rajyalakshmi
 date     :15/05/2020
 */
 
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
-// Top-down Recursive function to find all possible combinations by
-// replacing key's digits with characters of the corresponding list
-void findCombinations(auto const &keypad, auto const &input, string res, int index)
+string cDataArray[10] = {"", "", "ABC", "DEF", "GHI", "JKL","MNO", "PQRS", "TUV", "WXYZ"};
+class keypad
 {
-	// if we have processed every digit of key, print result
-	if (index==-1)
-	{
-		cout<<res<<" ";
-		return;
-	}
-	// stores current digit
-	int idigit=input[index];
-	// size of the list corresponding to current digit
-	int len=keypad[idigit].size();
-	// one by one replace the digit with each character in the
-	// corresponding list and recur for next digit
-	for (int istart = 0;istart<len;istart++) 
-	{
-		findCombinations(keypad,input,keypad[idigit][istart]+res,index-1);
-	}
-}
-
-// main function
-int main()
+//recursion to print all possible
+public :void  Recursion(string cNum,int icurrent_length,string cOutput)
 {
-	// mobile keypad
-	vector<char>keypad[] =
-	{
-		{}, {},		// 0 and 1 digit don't have any characters associated
-		{ 'A', 'B', 'C' },
-		{ 'D', 'E', 'F' },
-		{ 'G', 'H', 'I' },
-		{ 'J', 'K', 'L' },
-		{ 'M', 'N', 'O' },
-		{ 'P', 'Q', 'R', 'S'},
-		{ 'T', 'U', 'V' },
-		{ 'W', 'X', 'Y', 'Z'}
-	};
-	// input number in the form of an array (number can't start from 0 or 1)
-	int input[] = { 2,3};
-	int n=sizeof(input)/sizeof(input[0]);
-	// find all combinations
-	findCombinations(keypad,input,string(""), n-1);
-	return 0;
+    int istart;
+    if(icurrent_length == cNum.length())
+    {
+        cout<<cOutput<<",";
+        return;
+    }
+    int iDigit=cNum[icurrent_length]-'0';
+    //loop for all charcters according to given digits
+    for(istart=0;istart<cDataArray[iDigit].length();istart++)
+    {
+        cOutput+=cDataArray[iDigit][istart];
+        Recursion(cNum,icurrent_length+1,cOutput);
+       // output.clear
+       cOutput.pop_back();
+    }
 }
+//call recurstion in this function
+public:void PrintStrings(string cNum)
+{
+    string cOutput;
+    Recursion(cNum,0,cOutput);
+}
+};
+int main(int argc,char* argv[])
+ {
+ 	
+ 	//created a help command
+    if((argc==2)&&strcmp(argv[1],"-h")==0)    
+    {
+        cout<<"program shows number of possible ways of mobile key borad from 2 to 9"<<endl;
+    }
+    else
+    {
+     keypad k;
+     cout<<"enter  mobile keys"<<endl;
+     string cNumber;
+     cin>>cNumber;
+    //int string_length = si
+    sizeof(string)/sizeof(string[0]);
+    k.PrintStrings(cNumber);
+    return 0;
+}}
